@@ -5,4 +5,4 @@ A game about dodging red balls falling from the sky. Made using python and pygam
 -Use right and left arrows to move
 
 
-note that you need to install python and install pygame in your device to run the files.
+note that you need to install python and pygame in your device to run the files.
