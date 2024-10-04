@@ -96,11 +96,14 @@ class button(object):
 cloud = player(225, 400, 90, 90, 10)
 ball = enemy(random.randint(0, 450), 0, 25, 8)
 def redrawscreen():
-    font_score = pygame.font.SysFont("comicsans", 50, True)
-    text_score = font_score.render("Score: " + str(score), 1, (0, 0, 0))
-    text_high = font_score.render("High score: " + str(high_score), 1, (0, 0, 0))
-    win.blit(text_score, (300, 10))
-    win.blit(text_high, (0, 10))
+    # font_score = pygame.font.SysFont("comicsans", 50, True)
+    # text_score = font_score.render("Score: " + str(score), 1, (0, 0, 0))
+    # text_high = font_score.render("High score: " + str(high_score), 1, (0, 0, 0))
+    # win.blit(text_score, (300, 10))
+    # win.blit(text_high, (0, 10))
+    highScoreLabel.setText("High Score:" + str(high_score))
+    scoreLabel.setText("Score:" + str(score))
+    playGrid.render()
     cloud.draw(win)
     ball.draw(win)
 
@@ -195,6 +198,12 @@ def control():
         pygame.display.update()
         clock.tick(15)
 main_menu()
+
+playGrid = Grid(win, 30, 30)
+scoreLabel = BasicLabel("Score:" + str(score),(0, 0, 0), 'comicsans')
+highScoreLabel = BasicLabel("High Score:" + str(high_score),(0, 0, 0), 'comicsans')
+playGrid.addChild(highScoreLabel, (1, 0), 15, 5)
+playGrid.addChild(scoreLabel, (18, 0), 10, 5)
 # main loop
 while run:
     clock.tick(60)
@@ -202,6 +211,8 @@ while run:
     for event in pygame.event.get():
         if event.type== pygame.QUIT:
             run = False 
+        playGrid.checkEvent(event)
+
     keys = pygame.key.get_pressed()
     if keys[pygame.K_RIGHT] and cloud.x < 500 - cloud.vel - cloud.width:
         cloud.x += cloud.vel  
