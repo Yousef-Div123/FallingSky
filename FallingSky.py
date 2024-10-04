@@ -132,13 +132,13 @@ def main_menu():
     title = BasicLabel("Falling Sky", bright_yellow, 'comicsans')
     playButton = BasicButton("Play", playAction, green, (255, 255, 255), 'comicsans')
     quitButton = BasicButton("Quit", quitAction, red, (255, 255, 255), 'comicsans')
-    controlButton = BasicButton("Control", control, yellow, (255, 255, 255), 'comicsans')
+    # controlButton = BasicButton("Control", control, yellow, (255, 255, 255), 'comicsans')
 
     # adding buttons to grid
-    menuGrid.addChild(title, (4, 7), 23, 4)
-    menuGrid.addChild(playButton, (5, 14), 7, 4)
-    menuGrid.addChild(quitButton, (18, 14), 7, 4)
-    menuGrid.addChild(controlButton, (12, 19), 7, 4)
+    menuGrid.addChild(title, (4, 10), 23, 4)
+    menuGrid.addChild(playButton, (6, 17), 7, 4)
+    menuGrid.addChild(quitButton, (16, 17), 7, 4)
+    # menuGrid.addChild(controlButton, (12, 19), 7, 4)
 
     menu = True
     run = False
