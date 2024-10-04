@@ -1,18 +1,25 @@
 import pygame
 import random
 import time
+from PYGAME_GUI_EXT.src.Container import Grid
+from PYGAME_GUI_EXT.src.Component.Elements import BasicButton, BasicLabel
 
 # window
 pygame.init()
 win = pygame.display.set_mode((500, 500))
 pygame.display.set_caption("Falling Sky")
-clock = pygame.time.Clock()
+
+
+# static files
 bg = pygame.image.load('bg.jpg')
 click_sound=pygame.mixer.Sound('click.wav')
 cloud_img=pygame.image.load('cloud.png')
 control_img=pygame.image.load('control.jpg')
-hit_sound = pygame.mixer.Sound('hitsound.wav')                 
+hit_sound = pygame.mixer.Sound('hitsound.wav')      
+
+# constants
 score = 0
+clock = pygame.time.Clock()
 high_score = 0
 red = (200, 0, 0)
 green = (0, 200, 0)
@@ -101,6 +108,35 @@ def redrawscreen():
 def main_menu():
     global menu
     global run 
+
+    # grid
+    menuGrid = Grid(win, 30, 30)
+
+    # buttons functions
+    def playAction():
+        global menu
+        global run
+        click_sound.play()
+        menu = False
+        run = True
+
+    def quitAction():
+        click_sound.play()
+        pygame.quit()
+        quit()
+
+    # buttons
+    title = BasicLabel("Falling Sky", bright_yellow, 'comicsans')
+    playButton = BasicButton("Play", playAction, green, (255, 255, 255), 'comicsans')
+    quitButton = BasicButton("Quit", quitAction, red, (255, 255, 255), 'comicsans')
+    controlButton = BasicButton("Control", control, yellow, (255, 255, 255), 'comicsans')
+
+    # adding buttons to grid
+    menuGrid.addChild(title, (4, 7), 23, 4)
+    menuGrid.addChild(playButton, (5, 14), 7, 4)
+    menuGrid.addChild(quitButton, (18, 14), 7, 4)
+    menuGrid.addChild(controlButton, (12, 19), 7, 4)
+
     menu = True
     run = False
     while menu: 
@@ -108,12 +144,13 @@ def main_menu():
             if event.type == pygame.QUIT:
                 pygame.quit
                 quit()
+            menuGrid.checkEvent(event)
         win.blit(bg, (0, 0))
 
         # text
-        font_menu = pygame.font.SysFont("comicsans", 100)
-        text_menu = font_menu.render("Falling Sky", 1, (255, 255, 0))
-        win.blit(text_menu, (60, 150))
+        # font_menu = pygame.font.SysFont("comicsans", 100)
+        # text_menu = font_menu.render("Falling Sky", 1, (255, 255, 0))
+        # win.blit(text_menu, (60, 150))
         keys = pygame.key.get_pressed()
         if keys[pygame.K_ESCAPE]:
             run = False
@@ -122,13 +159,17 @@ def main_menu():
             run = True
             menu = False   
 
-        # buttons
-        red_button = button("quit", 100, 250, 55, 70, 50,red, bright_red, "quit", menu)
-        green_button = button("play", 303, 250, 50, 70, 50,green, bright_green, "play", menu)
-        yellow_button = button("control", 175, 320, 50, 123, 50, yellow, bright_yellow, "control", menu)
-        yellow_button.draw(win)
-        red_button.draw(win)
-        green_button.draw(win)
+        # old buttons
+        # red_button = button("quit", 100, 250, 55, 70, 50,red, bright_red, "quit", menu)
+        # green_button = button("play", 303, 250, 50, 70, 50,green, bright_green, "play", menu)
+        # yellow_button = button("control", 175, 320, 50, 123, 50, yellow, bright_yellow, "control", menu)
+        # yellow_button.draw(win)
+        # red_button.draw(win)
+        # green_button.draw(win)
+
+        # grid
+        menuGrid.render()
+
         pygame.display.update()
         clock.tick(15)
 
